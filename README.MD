@@ -5,25 +5,11 @@ users and cards where user can do simple transactions.
 #Requirements
 **Java 8**
 
-**Maven 3.6.3**
+**Maven 3.6+**
 
 **Docker**
 
 **MySQL 8.0**
-
-#Dependencies
-Bank Service uses MySQL for storing users and cards.
-
-#Configuration
-
-
-Here is configuration for connect Bank Service
-
-**spring.datasource.url=jdbc:MySQL://bank-service-db:3306/database**
-
-**spring.datasource.username=root**
-
-**spring.datasource.password=root**
 
 #Build and deploy
 * run docker command **docker-compose up** to set up environment
