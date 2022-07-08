@@ -15,8 +15,12 @@ public class CardAuthInfoServiceImpl implements CardAuthInfoService {
     @Value("${card.allowedFailedAttempts}")
     int allowedFailedAttempts;
 
+    private final CardRepository cardRepository;
+
     @Autowired
-    private CardRepository cardRepository;
+    public CardAuthInfoServiceImpl(CardRepository cardRepository) {
+        this.cardRepository = cardRepository;
+    }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)

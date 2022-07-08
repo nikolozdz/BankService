@@ -3,7 +3,6 @@ package com.egs.bankservice.service.cardaction;
 import com.egs.bankservice.entity.card.Card;
 import com.egs.bankservice.exception.BankServiceException;
 import com.egs.bankservice.repository.CardRepository;
-import com.egs.bankservice.shared.utils.Encoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,12 @@ public class CardActionServiceImpl implements CardActionService {
 
     private final Logger log = LoggerFactory.getLogger(CardActionServiceImpl.class);
 
+    private final CardRepository cardRepository;
+
     @Autowired
-    private CardRepository cardRepository;
+    public CardActionServiceImpl(CardRepository cardRepository) {
+        this.cardRepository = cardRepository;
+    }
 
     @Override
     @Transactional

@@ -35,11 +35,15 @@ public class CardServiceImpl implements CardService {
     @Value("${cardNumber.prefix}")
     private int prefix;
 
-    @Autowired
-    private CardRepository cardRepository;
+    private final CardRepository cardRepository;
+
+    private final UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    public CardServiceImpl(CardRepository cardRepository, UserRepository userRepository) {
+        this.cardRepository = cardRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     @Transactional

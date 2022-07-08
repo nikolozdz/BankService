@@ -23,11 +23,16 @@ public class CardAuthServiceImpl implements CardAuthService {
 
     private final Logger log = LoggerFactory.getLogger(CardAuthServiceImpl.class);
 
-    @Autowired
-    CardRepository cardRepository;
+    private final CardRepository cardRepository;
+
+    private final CardAuthInfoService cardAuthInfoService;
 
     @Autowired
-    CardAuthInfoService cardAuthInfoService;
+    public CardAuthServiceImpl(CardRepository cardRepository, CardAuthInfoService cardAuthInfoService) {
+        this.cardRepository = cardRepository;
+        this.cardAuthInfoService = cardAuthInfoService;
+    }
+
 
     @Override
     public ValidateCardResponse validateCard(String cardNumber) throws BankServiceException {
@@ -64,8 +69,6 @@ public class CardAuthServiceImpl implements CardAuthService {
                 .collect(Collectors.toList()));
 
         return cardAuthResponse;
-
-
     }
 
     private Card getCard(String cardNumber) throws BankServiceException {
