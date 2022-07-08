@@ -5,57 +5,18 @@ import com.egs.bankservice.model.card.AddCardRequest;
 import com.egs.bankservice.model.card.AddCardResponse;
 import com.egs.bankservice.model.card.CardResponse;
 import com.egs.bankservice.model.card.SetAuthMethodRequest;
-import com.egs.bankservice.service.card.CardService;
-import com.egs.bankservice.shared.dto.CardDto;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("api/cards")
-public class CardController {
+public interface CardController {
 
-    @Autowired
-    private CardService cardService;
+    AddCardResponse addCard(AddCardRequest addCardRequest) throws BankServiceException;
 
-    @PostMapping("add")
-    public AddCardResponse addCard(@RequestBody AddCardRequest addCardRequest) throws BankServiceException {
-        CardDto cardDto = cardService.addCard(addCardRequest);
-        AddCardResponse response = new AddCardResponse();
-        BeanUtils.copyProperties(cardDto, response);
-        return response;
-    }
+    CardResponse getCardById(long id) throws BankServiceException;
 
-    @GetMapping("get/{id}")
-    public CardResponse getCardById(@PathVariable(value = "id") long id) throws BankServiceException {
-        CardDto cardDto =  cardService.getCardById(id);
-        CardResponse response = new CardResponse();
-        BeanUtils.copyProperties(cardDto, response);
-        return response;
-    }
+    CardResponse getCardByNumber(String cardNumber) throws BankServiceException;
 
-    @GetMapping("getByCardNumber")
-    public CardResponse getCardByNumber(@RequestParam(value = "cardNumber") String cardNumber) throws BankServiceException {
-        CardDto cardDto =  cardService.getCardByNumber(cardNumber);
-        CardResponse response = new CardResponse();
-        BeanUtils.copyProperties(cardDto, response);
-        response.setUserPersonalId(cardDto.getUser().getPersonalId());
-        return response;
-    }
+    void deleteCard(long id) throws BankServiceException;
 
-    @DeleteMapping("delete/{id}")
-    public void deleteCard(@PathVariable(value = "id") long id) throws BankServiceException {
-        cardService.deleteCard(id);
-    }
+    void setAuthMethodByCardNumber(SetAuthMethodRequest setAuthMethodRequest) throws BankServiceException;
 
-    @PostMapping("setAuthMethod")
-    public void setAuthMethodByCardNumber(@RequestBody SetAuthMethodRequest setAuthMethodRequest) throws BankServiceException {
-        cardService.setAuthMethodByCardNumber(setAuthMethodRequest);
-    }
-
-    @PostMapping("unblock")
-    public void unblockCard(@RequestParam(value = "cardNumber") String cardNumber) throws BankServiceException {
-        cardService.unblockCard(cardNumber);
-    }
+    void unblockCard(String cardNumber) throws BankServiceException;
 }
-
